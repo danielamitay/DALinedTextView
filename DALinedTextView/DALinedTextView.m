@@ -10,6 +10,8 @@
 
 @implementation DALinedTextView
 
+#pragma mark - Superclass Overrides
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -51,6 +53,18 @@
         CGContextClosePath(context);
         CGContextStrokePath(context);
     }
+}
+
+- (void)setFont:(UIFont *)font
+{
+    [super setFont:font];
+    [self setNeedsDisplay];
+}
+
+- (void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    [self setNeedsDisplay];
 }
 
 #pragma mark - Property methods
