@@ -10,13 +10,17 @@
 
 @implementation DALinedTextView
 
-#pragma mark - Superclass Overrides
+#pragma mark - Superclass overrides
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self) {
+    if (self)
+    {
         // Initialization code
+        UIFont *font = self.font;
+        self.font = nil;
+        self.font = font;
     }
     return self;
 }
