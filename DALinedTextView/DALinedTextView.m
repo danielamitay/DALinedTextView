@@ -28,4 +28,23 @@
 }
 */
 
+#pragma mark - Property methods
+
+- (void)setHorizontalLineColor:(UIColor *)horizontalLineColor
+{
+    _horizontalLineColor = horizontalLineColor;
+    [self setNeedsDisplay];
+}
+
+- (void)setVerticalLineColor:(UIColor *)verticalLineColor
+{
+    _verticalLineColor = verticalLineColor;
+    [self setNeedsDisplay];
+}
+
+- (void)setMargins:(UIEdgeInsets)margins
+{
+    _margins = margins;
+}
+
 @end
