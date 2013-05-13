@@ -37,6 +37,12 @@
     }
     CGContextClosePath(context);
     CGContextStrokePath(context);
+    
+    CGContextSetStrokeColorWithColor(context, self.verticalLineColor.CGColor);
+    CGContextMoveToPoint(context, -1.0f, -self.bounds.size.height);
+    CGContextAddLineToPoint(context, -1.0f, self.contentSize.height + self.bounds.size.height);
+    CGContextClosePath(context);
+    CGContextStrokePath(context);
 }
 
 #pragma mark - Property methods
