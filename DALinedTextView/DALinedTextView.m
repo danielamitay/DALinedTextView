@@ -19,14 +19,25 @@
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
     // Drawing code
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetStrokeColorWithColor(context, self.horizontalLineColor.CGColor);
+    CGContextSetLineWidth(context, 1.0f);
+    CGContextBeginPath(context);
+    
+    CGFloat baseOffset = 8.0f + self.font.descender;
+    NSUInteger numberOfLines = (self.contentSize.height + self.bounds.size.height) / self.font.lineHeight;
+    for (NSInteger line = 0; line < numberOfLines; ++line)
+    {
+        CGFloat linePointY = (baseOffset + (self.font.lineHeight * line));
+        CGContextMoveToPoint(context, self.bounds.origin.x, linePointY);
+        CGContextAddLineToPoint(context, self.bounds.size.width, linePointY);
+    }
+    CGContextClosePath(context);
+    CGContextStrokePath(context);
 }
-*/
 
 #pragma mark - Property methods
 
