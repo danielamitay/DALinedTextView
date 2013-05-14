@@ -10,9 +10,9 @@
 
 @interface DALinedTextView : UITextView
 
-@property (nonatomic, copy) UIColor *horizontalLineColor;
-@property (nonatomic, copy) UIColor *verticalLineColor;
+@property (nonatomic, copy) UIColor *horizontalLineColor UI_APPEARANCE_SELECTOR;
+@property (nonatomic, copy) UIColor *verticalLineColor UI_APPEARANCE_SELECTOR;
 
-@property (nonatomic) UIEdgeInsets margins;
+@property (nonatomic) UIEdgeInsets margins UI_APPEARANCE_SELECTOR;
 
 @end

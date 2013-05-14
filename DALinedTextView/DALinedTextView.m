@@ -14,6 +14,17 @@
 
 @implementation DALinedTextView
 
++ (void)initialize
+{
+    if (self == [DALinedTextView class])
+    {
+        id appearance = [self appearance];
+        [appearance setHorizontalLineColor:DEFAULT_HORIZONTAL_COLOR];
+        [appearance setVerticalLineColor:DEFAULT_VERTICAL_COLOR];
+        [appearance setMargins:DEFAULT_MARGINS];
+    }
+}
+
 #pragma mark - Superclass overrides
 
 - (id)initWithFrame:(CGRect)frame
