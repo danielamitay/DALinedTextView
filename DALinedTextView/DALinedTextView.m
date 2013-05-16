@@ -42,6 +42,15 @@
     return self;
 }
 
+- (void)setContentSize:(CGSize)contentSize
+{
+    contentSize = (CGSize) {
+        .width = contentSize.width - self.margins.left - self.margins.right,
+        .height = MAX(contentSize.height, self.bounds.size.height - self.margins.top)
+    };
+    [super setContentSize:contentSize];
+}
+
 - (void)drawRect:(CGRect)rect
 {
     // Drawing code
