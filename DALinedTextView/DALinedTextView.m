@@ -19,6 +19,7 @@
     if (self == [DALinedTextView class])
     {
         id appearance = [self appearance];
+        [appearance setContentMode:UIViewContentModeRedraw];
         [appearance setHorizontalLineColor:DEFAULT_HORIZONTAL_COLOR];
         [appearance setVerticalLineColor:DEFAULT_VERTICAL_COLOR];
         [appearance setMargins:DEFAULT_MARGINS];
@@ -90,12 +91,6 @@
 - (void)setFont:(UIFont *)font
 {
     [super setFont:font];
-    [self setNeedsDisplay];
-}
-
-- (void)setFrame:(CGRect)frame
-{
-    [super setFrame:frame];
     [self setNeedsDisplay];
 }
 
