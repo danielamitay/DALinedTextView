@@ -54,11 +54,12 @@
         CGContextBeginPath(context);
         
         CGFloat baseOffset = 8.0f + self.font.descender;
+        CGFloat screenScale = [UIScreen mainScreen].scale;
         NSInteger firstVisibleLine = MAX(1, (self.contentOffset.y / self.font.lineHeight));
         NSInteger lastVisibleLine = ceilf((self.contentOffset.y + self.bounds.size.height) / self.font.lineHeight);
         for (NSInteger line = firstVisibleLine; line <= lastVisibleLine; ++line)
         {
-            CGFloat linePointY = (baseOffset + (self.font.lineHeight * line));
+            CGFloat linePointY = roundf((baseOffset + (self.font.lineHeight * line)) * screenScale) / screenScale;
             CGContextMoveToPoint(context, self.bounds.origin.x, linePointY);
             CGContextAddLineToPoint(context, self.bounds.size.width, linePointY);
         }
