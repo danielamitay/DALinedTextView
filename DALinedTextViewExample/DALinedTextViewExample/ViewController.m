@@ -7,8 +7,11 @@
 //
 
 #import "ViewController.h"
+#import "DALinedTextView.h"
 
 @interface ViewController ()
+
+@property (nonatomic, strong) DALinedTextView *textView;
 
 @end
 
@@ -18,6 +21,9 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    self.textView = [[DALinedTextView alloc] init];
+    self.textView.frame = self.view.bounds;
+    [self.view addSubview:self.textView];
 }
 
 - (void)didReceiveMemoryWarning
