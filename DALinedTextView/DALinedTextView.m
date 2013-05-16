@@ -36,6 +36,8 @@
         UIFont *font = self.font;
         self.font = nil;
         self.font = font;
+        
+        self.margins = [self.class.appearance margins];
     }
     return self;
 }
@@ -103,6 +105,13 @@
 - (void)setMargins:(UIEdgeInsets)margins
 {
     _margins = margins;
+    self.contentInset = (UIEdgeInsets) {
+        .top = self.margins.top,
+        .left = self.margins.left,
+        .bottom = self.margins.bottom,
+        .right = self.margins.right - self.margins.left
+    };
+    [self setContentSize:self.contentSize];
 }
 
 @end
