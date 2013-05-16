@@ -69,8 +69,8 @@
     if (self.verticalLineColor)
     {
         CGContextSetStrokeColorWithColor(context, self.verticalLineColor.CGColor);
-        CGContextMoveToPoint(context, -1.0f, -self.bounds.size.height);
-        CGContextAddLineToPoint(context, -1.0f, self.contentSize.height + self.bounds.size.height);
+        CGContextMoveToPoint(context, -1.0f, self.contentOffset.y);
+        CGContextAddLineToPoint(context, -1.0f, self.contentOffset.y + self.bounds.size.height);
         CGContextClosePath(context);
         CGContextStrokePath(context);
     }
