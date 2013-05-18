@@ -60,9 +60,8 @@
     
     if (self.horizontalLineColor)
     {
-        CGContextSetStrokeColorWithColor(context, self.horizontalLineColor.CGColor);
         CGContextBeginPath(context);
-        
+        CGContextSetStrokeColorWithColor(context, self.horizontalLineColor.CGColor);
         CGFloat baseOffset = 8.0f + self.font.descender;
         CGFloat screenScale = [UIScreen mainScreen].scale;
         NSInteger firstVisibleLine = MAX(1, (self.contentOffset.y / self.font.lineHeight));
@@ -73,13 +72,13 @@
             CGContextMoveToPoint(context, self.bounds.origin.x, linePointY);
             CGContextAddLineToPoint(context, self.bounds.size.width, linePointY);
         }
-        
         CGContextClosePath(context);
         CGContextStrokePath(context);
     }
     
     if (self.verticalLineColor)
     {
+        CGContextBeginPath(context);
         CGContextSetStrokeColorWithColor(context, self.verticalLineColor.CGColor);
         CGContextMoveToPoint(context, -1.0f, self.contentOffset.y);
         CGContextAddLineToPoint(context, -1.0f, self.contentOffset.y + self.bounds.size.height);
