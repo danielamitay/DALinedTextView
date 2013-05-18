@@ -12,6 +12,12 @@
 #define DEFAULT_VERTICAL_COLOR      [UIColor colorWithRed:0.957f green:0.416f blue:0.365f alpha:0.7f]
 #define DEFAULT_MARGINS             UIEdgeInsetsMake(10.0f, 10.0f, 0.0f, 10.0f)
 
+@interface DALinedTextView ()
+
+@property (nonatomic, assign) UIView *webDocumentView;
+
+@end
+
 @implementation DALinedTextView
 
 + (void)initialize
@@ -39,6 +45,8 @@
         self.font = font;
         
         self.margins = [self.class.appearance margins];
+        
+        self.webDocumentView = [self.subviews objectAtIndex:0];
     }
     return self;
 }
@@ -48,6 +56,10 @@
     contentSize = (CGSize) {
         .width = contentSize.width - self.margins.left - self.margins.right,
         .height = MAX(contentSize.height, self.bounds.size.height - self.margins.top)
+    };
+    self.webDocumentView.frame = (CGRect) {
+        .origin = self.webDocumentView.frame.origin,
+        .size = contentSize
     };
     [super setContentSize:contentSize];
 }
