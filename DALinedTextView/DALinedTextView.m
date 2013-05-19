@@ -66,7 +66,7 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    // Drawing code
+    // Line drawing code
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(context, 1.0f);
     
@@ -78,11 +78,16 @@
         CGFloat screenScale = [UIScreen mainScreen].scale;
         NSInteger firstVisibleLine = MAX(1, (self.contentOffset.y / self.font.lineHeight));
         NSInteger lastVisibleLine = ceilf((self.contentOffset.y + self.bounds.size.height) / self.font.lineHeight);
+        // Only draw lines that are visible on the screen.
+        // (As opposed to throughout the entire view's contents)
         for (NSInteger line = firstVisibleLine; line <= lastVisibleLine; ++line)
         {
-            CGFloat linePointY = roundf((baseOffset + (self.font.lineHeight * line)) * screenScale) / screenScale;
-            CGContextMoveToPoint(context, self.bounds.origin.x, linePointY);
-            CGContextAddLineToPoint(context, self.bounds.size.width, linePointY);
+            CGFloat linePointY = (baseOffset + (self.font.lineHeight * line));
+            // Rounding the point to the nearest pixel.
+            // Greatly reduces drawing time.
+            CGFloat roundedLinePointY = roundf(linePointY * screenScale) / screenScale;
+            CGContextMoveToPoint(context, self.bounds.origin.x, roundedLinePointY);
+            CGContextAddLineToPoint(context, self.bounds.size.width, roundedLinePointY);
         }
         CGContextClosePath(context);
         CGContextStrokePath(context);
