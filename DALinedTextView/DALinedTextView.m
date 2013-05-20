@@ -74,20 +74,24 @@
     {
         CGContextBeginPath(context);
         CGContextSetStrokeColorWithColor(context, self.horizontalLineColor.CGColor);
+        // Create un-mutated floats outside of the for loop.
+        // Reduces memory access.
         CGFloat baseOffset = 8.0f + self.font.descender;
         CGFloat screenScale = [UIScreen mainScreen].scale;
-        NSInteger firstVisibleLine = MAX(1, (self.contentOffset.y / self.font.lineHeight));
-        NSInteger lastVisibleLine = ceilf((self.contentOffset.y + self.bounds.size.height) / self.font.lineHeight);
+        CGFloat boundsX = self.bounds.origin.x;
+        CGFloat boundsWidth = self.bounds.size.width;
         // Only draw lines that are visible on the screen.
         // (As opposed to throughout the entire view's contents)
+        NSInteger firstVisibleLine = MAX(1, (self.contentOffset.y / self.font.lineHeight));
+        NSInteger lastVisibleLine = ceilf((self.contentOffset.y + self.bounds.size.height) / self.font.lineHeight);
         for (NSInteger line = firstVisibleLine; line <= lastVisibleLine; ++line)
         {
             CGFloat linePointY = (baseOffset + (self.font.lineHeight * line));
             // Rounding the point to the nearest pixel.
             // Greatly reduces drawing time.
             CGFloat roundedLinePointY = roundf(linePointY * screenScale) / screenScale;
-            CGContextMoveToPoint(context, self.bounds.origin.x, roundedLinePointY);
-            CGContextAddLineToPoint(context, self.bounds.size.width, roundedLinePointY);
+            CGContextMoveToPoint(context, boundsX, roundedLinePointY);
+            CGContextAddLineToPoint(context, boundsWidth, roundedLinePointY);
         }
         CGContextClosePath(context);
         CGContextStrokePath(context);
