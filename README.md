@@ -4,7 +4,8 @@
 
 `DALinedTextView` is special because it was built with performance and appropriate behavior in mind. Most Q&A and OSS solutions involve image-based backgrounds or overzealous drawing code. For most applications such implementations are great, but `DALinedTextView` was built with 1000-line (or more) `UITextView`s in mind.
 
-Performance decisions are commented so as to provide insight into the thought process behind `DALinedTextView`.
+Performance decisions are commented so as to provide insight into the thought process behind `DALinedTextView`. The current `-drawRect:` implementation takes as little a 1ms on an iPhone 5.
+
 
 ![Screenshot](https://github.com/danielamitay/DALinedTextView/raw/master/screenshot.png)
 
