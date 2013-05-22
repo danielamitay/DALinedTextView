@@ -39,7 +39,6 @@
     self = [super initWithFrame:frame];
     if (self)
     {
-        // Initialization code
         UIFont *font = self.font;
         self.font = nil;
         self.font = font;
@@ -66,7 +65,6 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    // Line drawing code
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(context, 1.0f);
     
