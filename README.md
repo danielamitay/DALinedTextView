@@ -1,6 +1,10 @@
 # DALinedTextView
 
-`DALinedTextView` is...
+`DALinedTextView` is a `UITextView` subclass that draws ruled lines to the view, similar to iOS' built-in Notes app. The lines conform to the appropriate line-height for the currently set `UIFont`.
+
+`DALinedTextView` is special because it was built with performance and appropriate behavior in mind. Most Q&A and OSS solutions involve image-based backgrounds or overzealous drawing code. For most applications such implementations are great, but `DALinedTextView` was built with 1000-line (or more) `UITextView`s in mind.
+
+Performance decisions are commented so as to provide insight into the thought process behind `DALinedTextView`.
 
 ## Installation
 
