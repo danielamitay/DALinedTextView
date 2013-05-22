@@ -23,6 +23,7 @@
 	// Do any additional setup after loading the view, typically from a nib.
     self.textView = [[DALinedTextView alloc] init];
     self.textView.frame = self.view.bounds;
+    self.textView.autoresizingMask = (UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth);
     [self.view addSubview:self.textView];
 }
 
