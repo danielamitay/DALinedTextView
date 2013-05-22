@@ -6,6 +6,8 @@
 
 Performance decisions are commented so as to provide insight into the thought process behind `DALinedTextView`.
 
+![Screenshot](https://github.com/danielamitay/DALinedTextView/raw/master/screenshot.png)
+
 ## Installation
 
 - Copy over the `DALinedTextView` folder to your project folder.
