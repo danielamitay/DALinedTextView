@@ -39,13 +39,16 @@
     self = [super initWithFrame:frame];
     if (self)
     {
+        // Recycling the font is necessary
+        // For proper line/text alignment
         UIFont *font = self.font;
         self.font = nil;
         self.font = font;
-        
-        self.margins = [self.class.appearance margins];
-        
+                
+        // We need to grab the underlying webView
+        // And resize it along with the margins
         self.webDocumentView = [self.subviews objectAtIndex:0];
+        self.margins = [self.class.appearance margins];
     }
     return self;
 }
@@ -72,12 +75,14 @@
     {
         CGContextBeginPath(context);
         CGContextSetStrokeColorWithColor(context, self.horizontalLineColor.CGColor);
+        
         // Create un-mutated floats outside of the for loop.
         // Reduces memory access.
         CGFloat baseOffset = 7.0f + self.font.descender;
         CGFloat screenScale = [UIScreen mainScreen].scale;
         CGFloat boundsX = self.bounds.origin.x;
         CGFloat boundsWidth = self.bounds.size.width;
+        
         // Only draw lines that are visible on the screen.
         // (As opposed to throughout the entire view's contents)
         NSInteger firstVisibleLine = MAX(1, (self.contentOffset.y / self.font.lineHeight));
