@@ -8,6 +8,7 @@
 
 #import "DALinedTextView.h"
 
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 #define DEFAULT_HORIZONTAL_COLOR    [UIColor colorWithRed:0.722f green:0.910f blue:0.980f alpha:0.7f]
 #define DEFAULT_VERTICAL_COLOR      [UIColor colorWithRed:0.957f green:0.416f blue:0.365f alpha:0.7f]
 #define DEFAULT_MARGINS             UIEdgeInsetsMake(10.0f, 10.0f, 0.0f, 10.0f)
@@ -47,7 +48,21 @@
                 
         // We need to grab the underlying webView
         // And resize it along with the margins
-        self.webDocumentView = [self.subviews objectAtIndex:0];
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") == NO) {
+        // iOS 6 or older container text view is UIWebDocumentView
+        for (UIView *subview in self.subviews) {
+            if ([NSStringFromClass([subview class]) isEqualToString:@"UIWebDocumentView"]) {
+                self.webDocumentView = subview;
+            }
+        }
+    } else {
+        // iOS 7 container text view is UITextContainerView
+        for (UIView *subview in self.subviews) {
+            if ([NSStringFromClass([subview class]) isEqualToString:@"UITextContainerView"]) {
+                self.webDocumentView = subview;
+            }
+        }
+    }
         self.margins = [self.class.appearance margins];
     }
     return self;
