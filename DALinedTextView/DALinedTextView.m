@@ -12,6 +12,7 @@
 #define DEFAULT_HORIZONTAL_COLOR    [UIColor colorWithRed:0.722f green:0.910f blue:0.980f alpha:0.7f]
 #define DEFAULT_VERTICAL_COLOR      [UIColor colorWithRed:0.957f green:0.416f blue:0.365f alpha:0.7f]
 #define DEFAULT_MARGINS             UIEdgeInsetsMake(10.0f, 10.0f, 0.0f, 10.0f)
+#define DEFAULT_OFFSET              7.0f
 
 @interface DALinedTextView ()
 
@@ -30,6 +31,7 @@
         [appearance setHorizontalLineColor:DEFAULT_HORIZONTAL_COLOR];
         [appearance setVerticalLineColor:DEFAULT_VERTICAL_COLOR];
         [appearance setMargins:DEFAULT_MARGINS];
+        [appearance setOffset:DEFAULT_OFFSET];
     }
 }
 
@@ -93,7 +95,7 @@
         
         // Create un-mutated floats outside of the for loop.
         // Reduces memory access.
-        CGFloat baseOffset = 7.0f + self.font.descender;
+        CGFloat baseOffset = self.offset + self.font.descender;
         CGFloat screenScale = [UIScreen mainScreen].scale;
         CGFloat boundsX = self.bounds.origin.x;
         CGFloat boundsWidth = self.bounds.size.width;
