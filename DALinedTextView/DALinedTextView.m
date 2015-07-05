@@ -23,8 +23,7 @@
 
 + (void)initialize
 {
-    if (self == [DALinedTextView class])
-    {
+    if (self == [DALinedTextView class]) {
         id appearance = [self appearance];
         [appearance setContentMode:UIViewContentModeRedraw];
         [appearance setHorizontalLineColor:DEFAULT_HORIZONTAL_COLOR];
@@ -33,13 +32,13 @@
     }
 }
 
+
 #pragma mark - Superclass overrides
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self)
-    {
+    if (self) {
         // Recycling the font is necessary
         // For proper line/text alignment
         UIFont *font = self.font;
@@ -86,8 +85,7 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(context, 1.0f);
     
-    if (self.horizontalLineColor)
-    {
+    if (self.horizontalLineColor) {
         CGContextBeginPath(context);
         CGContextSetStrokeColorWithColor(context, self.horizontalLineColor.CGColor);
         
@@ -102,8 +100,7 @@
         // (As opposed to throughout the entire view's contents)
         NSInteger firstVisibleLine = MAX(1, (self.contentOffset.y / self.font.lineHeight));
         NSInteger lastVisibleLine = ceilf((self.contentOffset.y + self.bounds.size.height) / self.font.lineHeight);
-        for (NSInteger line = firstVisibleLine; line <= lastVisibleLine; ++line)
-        {
+        for (NSInteger line = firstVisibleLine; line <= lastVisibleLine; line++) {
             CGFloat linePointY = (baseOffset + (self.font.lineHeight * line));
             // Rounding the point to the nearest pixel.
             // Greatly reduces drawing time.
@@ -115,8 +112,7 @@
         CGContextStrokePath(context);
     }
     
-    if (self.verticalLineColor)
-    {
+    if (self.verticalLineColor) {
         CGContextBeginPath(context);
         CGContextSetStrokeColorWithColor(context, self.verticalLineColor.CGColor);
         CGContextMoveToPoint(context, -1.0f, self.contentOffset.y);
@@ -131,6 +127,7 @@
     [super setFont:font];
     [self setNeedsDisplay];
 }
+
 
 #pragma mark - Property methods
 
