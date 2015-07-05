@@ -47,19 +47,12 @@
         
         // We need to grab the underlying webView
         // And resize it along with the margins
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0") == NO) {
-            // iOS 6 or older container text view is UIWebDocumentView
-            for (UIView *subview in self.subviews) {
-                if ([NSStringFromClass([subview class]) isEqualToString:@"UIWebDocumentView"]) {
-                    self.webDocumentView = subview;
-                }
-            }
-        } else {
-            // iOS 7 container text view is UITextContainerView
-            for (UIView *subview in self.subviews) {
-                if ([NSStringFromClass([subview class]) isEqualToString:@"UITextContainerView"]) {
-                    self.webDocumentView = subview;
-                }
+        NSString *desiredDocumentClass = (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")
+                                          ? @"UITextContainerView"
+                                          : @"UIWebDocumentView");
+        for (UIView *subview in self.subviews) {
+            if ([NSStringFromClass([subview class]) isEqualToString:desiredDocumentClass]) {
+                self.webDocumentView = subview;
             }
         }
         self.margins = [self.class.appearance margins];
