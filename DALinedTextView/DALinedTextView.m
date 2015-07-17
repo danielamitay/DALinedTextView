@@ -62,10 +62,19 @@
 
 - (void)setContentSize:(CGSize)contentSize
 {
+    // <<Add>>calc bounds height after calc line number
+    NSInteger lineNum = [self.text componentsSeparatedByString:@"¥n"].count;
+    NSInteger height = (lineNum * self.font.lineHeight) + 7.0f + self.font.descender;
     contentSize = (CGSize) {
         .width = contentSize.width - self.margins.left - self.margins.right,
-        .height = MAX(contentSize.height, self.bounds.size.height - self.margins.top)
+        .height = MAX(contentSize.height, height)
     };
+    //---------------------------------------------------
+    //    contentSize = (CGSize) {
+    //        .width = contentSize.width - self.margins.left - self.margins.right,
+    //        .height = MAX(contentSize.height, self.bounds.size.height - self.margins.top)
+    //    };
+    
     self.webDocumentView.frame = (CGRect) {
         .origin = self.webDocumentView.frame.origin,
         .size = contentSize
@@ -145,6 +154,11 @@
         .bottom = self.margins.bottom,
         .right = self.margins.right - self.margins.left
     };
+    [self setContentSize:self.contentSize];
+}
+
+-(void)textViewDidChange:(UITextView *)textView
+{
     [self setContentSize:self.contentSize];
 }
 
