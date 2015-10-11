@@ -8,16 +8,8 @@
 
 #import "DALinedTextView.h"
 
-#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 #define DEFAULT_HORIZONTAL_COLOR    [UIColor colorWithRed:0.722f green:0.910f blue:0.980f alpha:0.7f]
 #define DEFAULT_VERTICAL_COLOR      [UIColor colorWithRed:0.957f green:0.416f blue:0.365f alpha:0.7f]
-#define DEFAULT_MARGINS             UIEdgeInsetsMake(10.0f, 10.0f, 0.0f, 10.0f)
-
-@interface DALinedTextView ()
-
-@property (nonatomic, assign) UIView *webDocumentView;
-
-@end
 
 @implementation DALinedTextView
 
@@ -28,7 +20,6 @@
         [appearance setContentMode:UIViewContentModeRedraw];
         [appearance setHorizontalLineColor:DEFAULT_HORIZONTAL_COLOR];
         [appearance setVerticalLineColor:DEFAULT_VERTICAL_COLOR];
-        [appearance setMargins:DEFAULT_MARGINS];
     }
 }
 
@@ -44,39 +35,16 @@
         UIFont *font = self.font;
         self.font = nil;
         self.font = font;
-        
-        // We need to grab the underlying webView
-        // And resize it along with the margins
-        NSString *desiredDocumentClass = (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")
-                                          ? @"UITextContainerView"
-                                          : @"UIWebDocumentView");
-        for (UIView *subview in self.subviews) {
-            if ([NSStringFromClass([subview class]) isEqualToString:desiredDocumentClass]) {
-                self.webDocumentView = subview;
-            }
-        }
-        self.margins = [self.class.appearance margins];
     }
     return self;
 }
 
-- (void)setContentSize:(CGSize)contentSize
-{
-    contentSize = (CGSize) {
-        .width = contentSize.width - self.margins.left - self.margins.right,
-        .height = MAX(contentSize.height, self.bounds.size.height - self.margins.top)
-    };
-    self.webDocumentView.frame = (CGRect) {
-        .origin = self.webDocumentView.frame.origin,
-        .size = contentSize
-    };
-    [super setContentSize:contentSize];
-}
-
 - (void)drawRect:(CGRect)rect
 {
+    UIScreen *screen = self.window.screen ?: [UIScreen mainScreen];
+    CGFloat lineWidth = 1.0f / screen.scale;
     CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetLineWidth(context, 1.0f);
+    CGContextSetLineWidth(context, lineWidth);
     
     if (self.horizontalLineColor) {
         CGContextBeginPath(context);
@@ -84,7 +52,7 @@
         
         // Create un-mutated floats outside of the for loop.
         // Reduces memory access.
-        CGFloat baseOffset = 8.0f + self.font.descender;
+        CGFloat baseOffset = self.textContainerInset.top + self.font.descender;
         CGFloat screenScale = [UIScreen mainScreen].scale;
         CGFloat boundsX = self.bounds.origin.x;
         CGFloat boundsWidth = self.bounds.size.width;
@@ -108,8 +76,8 @@
     if (self.verticalLineColor) {
         CGContextBeginPath(context);
         CGContextSetStrokeColorWithColor(context, self.verticalLineColor.CGColor);
-        CGContextMoveToPoint(context, -1.0f, self.contentOffset.y);
-        CGContextAddLineToPoint(context, -1.0f, self.contentOffset.y + self.bounds.size.height);
+        CGContextMoveToPoint(context, -lineWidth + self.textContainerInset.left, self.contentOffset.y);
+        CGContextAddLineToPoint(context, -lineWidth + self.textContainerInset.left, self.contentOffset.y + self.bounds.size.height);
         CGContextClosePath(context);
         CGContextStrokePath(context);
     }
@@ -134,18 +102,6 @@
 {
     _verticalLineColor = verticalLineColor;
     [self setNeedsDisplay];
-}
-
-- (void)setMargins:(UIEdgeInsets)margins
-{
-    _margins = margins;
-    self.contentInset = (UIEdgeInsets) {
-        .top = self.margins.top,
-        .left = self.margins.left,
-        .bottom = self.margins.bottom,
-        .right = self.margins.right - self.margins.left
-    };
-    [self setContentSize:self.contentSize];
 }
 
 @end
