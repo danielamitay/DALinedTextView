@@ -22,7 +22,7 @@ Example project included (DALinedTextViewExample)
 
 ### Compatibility
 
-iOS5.0+
+iOS7.0+
 
 ### Automatic Reference Counting (ARC) support
 
@@ -33,7 +33,6 @@ iOS5.0+
 - [Personal website](http://danielamitay.com)
 - [GitHub](http://github.com/danielamitay)
 - [Twitter](http://twitter.com/danielamitay)
-- [LinkedIn](http://www.linkedin.com/in/danielamitay)
 - [Email](mailto:hello@danielamitay.com)
 
 If you use/enjoy `DALinedTextView`, let me know!
