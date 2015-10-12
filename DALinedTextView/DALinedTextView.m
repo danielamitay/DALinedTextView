@@ -89,6 +89,12 @@
     [self setNeedsDisplay];
 }
 
+- (void)setTextContainerInset:(UIEdgeInsets)textContainerInset
+{
+    [super setTextContainerInset:textContainerInset];
+    [self setNeedsDisplay];
+}
+
 
 #pragma mark - Property methods
 
